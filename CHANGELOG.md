@@ -1,5 +1,13 @@
 # Jannovar Changelog
 
+## HEAD (unreleased)
+
+### jannovar-core
+
+* Extended `VariantEffect` for the effects of structural variants.
+  Removing documentation that the effect is not used in Jannovar for some now interpreted ones.
+  Also variant effect for non-coding variants is added using the [current VEP predictions](https://www.ensembl.org/info/genome/variation/prediction/predicted_data.html) as a template.
+
 ## v0.27
 
 ### jannovar-cli

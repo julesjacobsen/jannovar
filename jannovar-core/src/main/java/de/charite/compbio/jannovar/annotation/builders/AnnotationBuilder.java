@@ -275,10 +275,15 @@ abstract class AnnotationBuilder {
 				varTypes.addAll(ImmutableList.of(VariantEffect.SPLICE_REGION_VARIANT));
 			// Check for being in 5' or 3' UTR.
 			if (so.overlapsWithFivePrimeUTR(changeInterval)) {
+				if (change.getRefLength() > change.getAltLength()) {
+					varTypes.add(VariantEffect.FIVE_PRIME_UTR_TRUNCATION);
+				} else if (change.getRefLength() < change.getAltLength()) {
+					varTypes.add(VariantEffect.FIVE_PRIME_UTR_ELONGATION);
+				}
 				// Check if variant overlaps really with an UTR
-				if (so.overlapsWithExon(changeInterval))
+				if (so.overlapsWithExon(changeInterval)) {
 					varTypes.add(VariantEffect.FIVE_PRIME_UTR_EXON_VARIANT);
-				else {
+				} else {
 					// between two UTRs. check for coding or non-coding transcript.
 					if (transcript.isCoding())
 						varTypes.add(VariantEffect.FIVE_PRIME_UTR_INTRON_VARIANT);
@@ -286,6 +291,11 @@ abstract class AnnotationBuilder {
 						varTypes.add(VariantEffect.FIVE_PRIME_UTR_INTRON_VARIANT);
 				}
 			} else {
+				if (change.getRefLength() > change.getAltLength()) {
+					varTypes.add(VariantEffect.THREE_PRIME_UTR_TRUNCATION);
+				} else if (change.getRefLength() < change.getAltLength()) {
+					varTypes.add(VariantEffect.THREE_PRIME_UTR_ELONGATION);
+				}
 				// Check if variant overlaps really with an UTR
 				if (so.overlapsWithExon(changeInterval))
 					varTypes.add(VariantEffect.THREE_PRIME_UTR_EXON_VARIANT);

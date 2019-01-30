@@ -195,18 +195,26 @@ public enum VariantEffect {
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002013">SO:0002013</a> A sequence variant
 	 * that causes the reduction of a the 5'UTR with regard to the reference sequence (is a:
 	 * {@link #FIVE_PRIME_UTR_EXON_VARIANT} or {@link #FIVE_PRIME_UTR_INTRON_VARIANT})
-	 *
-	 * Jannovar does <b>not</b> yield use this at the moment.
 	 */
 	FIVE_PRIME_UTR_TRUNCATION,
 	/**
 	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002015">SO:0002015</a> A sequence variant
 	 * that causes the reduction of a the 3' UTR with regard to the reference sequence (is a:
 	 * {@link #FIVE_PRIME_UTR_EXON_VARIANT} or {@link #FIVE_PRIME_UTR_INTRON_VARIANT}).
-	 *
-	 * Jannovar does <b>not</b> yield use this at the moment.
 	 */
 	THREE_PRIME_UTR_TRUNCATION,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002014">SO:0002014</a> A sequence variant
+	 * that causes the reduction of a the 5'UTR with regard to the reference sequence (is a:
+	 * {@link #FIVE_PRIME_UTR_EXON_VARIANT} or {@link #FIVE_PRIME_UTR_INTRON_VARIANT})
+	 */
+	FIVE_PRIME_UTR_ELONGATION,
+	/**
+	 * <a href="http://www.sequenceontology.org/browser/current_svn/term/SO:0002016">SO:0002016</a> A sequence variant
+	 * that causes the reduction of a the 3' UTR with regard to the reference sequence (is a:
+	 * {@link #FIVE_PRIME_UTR_EXON_VARIANT} or {@link #FIVE_PRIME_UTR_INTRON_VARIANT}).
+	 */
+	THREE_PRIME_UTR_ELONGATION,
 
 	// changes in the splicing region
 	/**
@@ -585,6 +593,7 @@ public enum VariantEffect {
 			return "DOWNSTREAM";
 		case FIVE_PRIME_UTR_PREMATURE_START_CODON_GAIN_VARIANT:
 		case FIVE_PRIME_UTR_TRUNCATION:
+		case FIVE_PRIME_UTR_ELONGATION:
 		case FIVE_PRIME_UTR_EXON_VARIANT:
 			return "UTR5";
 		case FRAMESHIFT_ELONGATION:
@@ -634,6 +643,7 @@ public enum VariantEffect {
 		case SYNONYMOUS_VARIANT:
 			return "SYNONYMOUS";
 		case THREE_PRIME_UTR_TRUNCATION:
+		case THREE_PRIME_UTR_ELONGATION:
 		case THREE_PRIME_UTR_EXON_VARIANT:
 			return "UTR3";
 		case TRANSCRIPT_ABLATION:
@@ -720,6 +730,8 @@ public enum VariantEffect {
 			return "feature_truncation";
 		case FIVE_PRIME_UTR_PREMATURE_START_CODON_GAIN_VARIANT:
 			return "5_prime_UTR_premature_start_codon_gain_variant";
+		case FIVE_PRIME_UTR_ELONGATION:
+			return "5_prime_UTR_elongation";
 		case FIVE_PRIME_UTR_TRUNCATION:
 			return "5_prime_UTR_truncation";
 		case FIVE_PRIME_UTR_EXON_VARIANT:
@@ -800,6 +812,8 @@ public enum VariantEffect {
 			return "synonymous_variant";
 		case TF_BINDING_SITE_VARIANT:
 			return "tf_binding_site_variant";
+		case THREE_PRIME_UTR_ELONGATION:
+			return "3_prime_UTR_elongation";
 		case THREE_PRIME_UTR_TRUNCATION:
 			return "3_prime_UTR_truncation";
 		case THREE_PRIME_UTR_EXON_VARIANT:
@@ -864,6 +878,8 @@ public enum VariantEffect {
 			return "SO:0001906";
 		case FIVE_PRIME_UTR_PREMATURE_START_CODON_GAIN_VARIANT:
 			return "SO:0001983";
+		case FIVE_PRIME_UTR_ELONGATION:
+			return "SO:0002014";
 		case FIVE_PRIME_UTR_TRUNCATION:
 			return "SO:0002013";
 		case FIVE_PRIME_UTR_EXON_VARIANT:
@@ -944,6 +960,8 @@ public enum VariantEffect {
 			return "SO:0001892";
 		case TF_BINDING_SITE_VARIANT:
 			return "SO:0001782";
+		case THREE_PRIME_UTR_ELONGATION:
+			return "SO:0002016";
 		case THREE_PRIME_UTR_TRUNCATION:
 			return "SO:0002015";
 		case THREE_PRIME_UTR_EXON_VARIANT:
@@ -1026,6 +1044,8 @@ public enum VariantEffect {
 		switch (this) {
 		case FIVE_PRIME_UTR_TRUNCATION:
 		case THREE_PRIME_UTR_TRUNCATION:
+		case FIVE_PRIME_UTR_ELONGATION:
+		case THREE_PRIME_UTR_ELONGATION:
 		case FIVE_PRIME_UTR_EXON_VARIANT:
 		case THREE_PRIME_UTR_EXON_VARIANT:
 			return isUtrOffExome;
@@ -1092,7 +1112,10 @@ public enum VariantEffect {
 		switch (this) {
 		case CODING_TRANSCRIPT_INTRON_VARIANT:
 		case FIVE_PRIME_UTR_INTRON_VARIANT:
+		case FIVE_PRIME_UTR_TRUNCATION:
+		case FIVE_PRIME_UTR_ELONGATION:
 		case THREE_PRIME_UTR_TRUNCATION:
+		case THREE_PRIME_UTR_ELONGATION:
 		case THREE_PRIME_UTR_INTRON_VARIANT:
 		case NON_CODING_TRANSCRIPT_INTRON_VARIANT:
 		case NON_CODING_TRANSCRIPT_VARIANT:

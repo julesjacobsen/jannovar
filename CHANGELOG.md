@@ -11,6 +11,7 @@
 * Extended `VariantEffect` for the effects of structural variants.
   Removing documentation that the effect is not used in Jannovar for some now interpreted ones.
   Also variant effect for non-coding variants is added using the [current VEP predictions](https://www.ensembl.org/info/genome/variation/prediction/predicted_data.html) as a template.
+* Using five and three prime truncation/elongation variant effects now.
 
 ## v0.27
 

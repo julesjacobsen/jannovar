@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedMultiset;
 
 import de.charite.compbio.jannovar.Immutable;
+import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.VariantDescription;
@@ -146,6 +147,26 @@ public final class VariantAnnotations implements VariantDescription {
 
 	public String getAlt() {
 		return change.getAlt();
+	}
+
+	@Override
+	public int getRefLength() {
+		return change.getRefLength();
+	}
+
+	@Override
+	public int getAltLength() {
+		return change.getAltLength();
+	}
+
+	@Override
+	public GenomeInterval getGenomeInterval() {
+		return change.getGenomeInterval();
+	}
+
+	@Override
+	public VariantDescription withStrand(Strand strand) {
+		throw new UnsupportedOperationException("Cannot get VariantAnnotation withStrand()");
 	}
 
 	public int compareTo(Annotation other) {

@@ -137,6 +137,16 @@ public final class GenomeVariant implements VariantDescription {
 		return this.alt;
 	}
 
+	@Override
+	public int getRefLength() {
+		return this.ref.length();
+	}
+
+	@Override
+	public int getAltLength() {
+		return this.alt.length();
+	}
+
 	/**
 	 * Construct object and enforce strand.
 	 */
@@ -169,6 +179,7 @@ public final class GenomeVariant implements VariantDescription {
 	/**
 	 * @return interval of the genome change
 	 */
+	@Override
 	public GenomeInterval getGenomeInterval() {
 		if (isSymbolic())
 			return new GenomeInterval(pos, 1);

@@ -34,6 +34,32 @@ public interface VariantDescription {
 	 */
 	public String getAlt();
 
+	/**
+	 * @return Length of affected reference; {@code -1} if non-linear.
+	 */
+	public int getRefLength();
+
+	/** @return {@link GenomeInterval} with outer borders of confidence interval. */
+	default public GenomeInterval getOuterGenomeInterval() {
+		return getGenomeInterval();
+	}
+
+	/** @return {@link GenomeInterval} with mid borders of confidence interval. */
+	public GenomeInterval getGenomeInterval();
+
+	/** @return {@link GenomeInterval} with inner borders of confidence interval. */
+	default public GenomeInterval getInnerGenomeInterval() {
+		return getGenomeInterval();
+	}
+
+	/** @return Return the same variant description but on the other strand. */
+	public VariantDescription withStrand(Strand strand);
+
+	/**
+	 * @return Length of alternative allele; {@code -1} if non-linear.
+	 */
+	public int getAltLength();
+
 	int compareTo(Annotation other);
 
 }

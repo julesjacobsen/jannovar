@@ -140,26 +140,28 @@ public class BlockSubstitutionAnnotationBuilderTest {
 
 	@Test
 	public void testForwardFivePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6640070,
-				PositionType.ZERO_BASED), "ACG", "CGTT");
+		GenomeVariant change1 = new GenomeVariant(
+				new GenomePosition(refDict, Strand.FWD, 1, 6640070, PositionType.ZERO_BASED), "ACG", "CGTT");
 		Annotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(0, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("-195_-193delACGinsCGTT", annotation1.getCDSNTChange().toHGVSString());
-		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FIVE_PRIME_UTR_EXON_VARIANT), annotation1.getEffects());
+		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.FIVE_PRIME_UTR_EXON_VARIANT,
+				VariantEffect.FIVE_PRIME_UTR_ELONGATION), annotation1.getEffects());
 	}
 
 	@Test
 	public void testForwardThreePrimeUTR() throws InvalidGenomeVariant {
-		GenomeVariant change1 = new GenomeVariant(new GenomePosition(refDict, Strand.FWD, 1, 6649329,
-				PositionType.ZERO_BASED), "ACG", "CGGTT");
+		GenomeVariant change1 = new GenomeVariant(
+				new GenomePosition(refDict, Strand.FWD, 1, 6649329, PositionType.ZERO_BASED), "ACG", "CGGTT");
 		Annotation annotation1 = new BlockSubstitutionAnnotationBuilder(infoForward, change1,
 				new AnnotationBuilderOptions()).build();
 		Assert.assertEquals(infoForward.getAccession(), annotation1.getTranscript().getAccession());
 		Assert.assertEquals(10, annotation1.getAnnoLoc().getRank());
 		Assert.assertEquals("*58_*60delACGinsCGGTT", annotation1.getCDSNTChange().toHGVSString());
-		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.THREE_PRIME_UTR_EXON_VARIANT), annotation1.getEffects());
+		Assert.assertEquals(ImmutableSortedSet.of(VariantEffect.THREE_PRIME_UTR_EXON_VARIANT,
+				VariantEffect.THREE_PRIME_UTR_ELONGATION), annotation1.getEffects());
 	}
 
 	@Test

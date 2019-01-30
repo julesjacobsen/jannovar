@@ -26,6 +26,8 @@ import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 
+// TODO(holtgrewe): this would actually also work without the actual sequence, could be re-used for SVDeletionAnnotationBuilder
+
 /**
  * Builds {@link Annotation} objects for the deletion {@link GenomeVariant}s in the given {@link TranscriptModel}.
  *
@@ -61,6 +63,7 @@ public final class DeletionAnnotationBuilder extends AnnotationBuilder {
 			return buildNonCodingAnnotation();
 
 		final GenomeInterval changeInterval = change.getGenomeInterval();
+		// TODO: annotate with feature ablation and exon deletion in a more differentiated fashion
 		if (so.containsExon(changeInterval)) // deletion of whole exon
 			return buildFeatureAblationAnnotation();
 		else if (so.overlapsWithTranslationalStartSite(changeInterval))
@@ -129,7 +132,7 @@ public final class DeletionAnnotationBuilder extends AnnotationBuilder {
 			this.changeInterval = change.getGenomeInterval();
 			this.wtCDSSeq = projector.getTranscriptStartingAtCDS();
 			this.varCDSSeq = seqChangeHelper.getCDSWithGenomeVariant(change);
-			this.delFrameShift = DeletionAnnotationBuilder.this.change.getRef().length() % 3;
+			this.delFrameShift = DeletionAnnotationBuilder.this.change.getRefLength() % 3;
 
 			// Get the change begin position as CDS coordinate, handling introns and positions outside of CDS.
 			this.changeBeginPos = projector.projectGenomeToCDSPosition(changeInterval.getGenomeBeginPos());
@@ -243,7 +246,7 @@ public final class DeletionAnnotationBuilder extends AnnotationBuilder {
 
 			// Handle the case of deleting a stop codon at the very last entry of the translated amino acid string and
 			// short-circuit.
-			// == is correct even if getPos() is zero based 
+			// == is correct even if getPos() is zero based
 			// because getPos points to the stop position which is one base after the AA sequence
 			if (varTypes.contains(VariantEffect.STOP_LOST) && aaChange.getPos() == varAASeq.length()) {
 				// Note: used to be "p.*${pos}del?"

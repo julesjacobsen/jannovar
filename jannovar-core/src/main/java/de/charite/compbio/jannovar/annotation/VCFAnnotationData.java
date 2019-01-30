@@ -14,6 +14,7 @@ import de.charite.compbio.jannovar.reference.ProjectionException;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
 import de.charite.compbio.jannovar.reference.TranscriptPosition;
 import de.charite.compbio.jannovar.reference.TranscriptProjectionDecorator;
+import de.charite.compbio.jannovar.reference.VariantDescription;
 
 /**
  * Class for collecting the data for a VCF annotation string.
@@ -86,7 +87,7 @@ class VCFAnnotationData {
 		}
 	}
 
-	public void setTranscriptAndChange(TranscriptModel tm, GenomeVariant change) {
+	public void setTranscriptAndChange(TranscriptModel tm, VariantDescription change) {
 		if (tm == null)
 			return;
 		featureType = "transcript";

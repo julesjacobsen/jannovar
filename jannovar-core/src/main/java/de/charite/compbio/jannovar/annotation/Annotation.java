@@ -9,6 +9,7 @@ import de.charite.compbio.jannovar.Immutable;
 import de.charite.compbio.jannovar.hgvs.AminoAcidCode;
 import de.charite.compbio.jannovar.hgvs.nts.change.NucleotideChange;
 import de.charite.compbio.jannovar.hgvs.protein.change.ProteinChange;
+import de.charite.compbio.jannovar.reference.GenomeInterval;
 import de.charite.compbio.jannovar.reference.GenomeVariant;
 import de.charite.compbio.jannovar.reference.Strand;
 import de.charite.compbio.jannovar.reference.TranscriptModel;
@@ -49,7 +50,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 			+ "cDNA.pos / cDNA.length|CDS.pos / CDS.length|AA.pos / AA.length|Distance|ERRORS / WARNINGS / INFO'";
 
 	/** the annotated {@link GenomeVariant} */
-	private final GenomeVariant change;
+	private final VariantDescription change;
 
 	/** variant types, sorted by internal pathogenicity score */
 	private final ImmutableSortedSet<VariantEffect> effects;
@@ -91,7 +92,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	 * The constructor will sort <code>effects</code> by pathogenicity before storing.
 	 *
 	 * @param change
-	 *            the annotated {@link GenomeVariant}
+	 *            the annotated {@link VariantDescription}
 	 * @param transcript
 	 *            transcript for this annotation
 	 * @param effects
@@ -105,7 +106,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	 * @param proteinChange
 	 *            predicted {@link ProteinChange}
 	 */
-	public Annotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> effects,
+	public Annotation(TranscriptModel transcript, VariantDescription change, Collection<VariantEffect> effects,
 			AnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange) {
 		this(transcript, change, effects, annoLoc, genomicNTChange, cdsNTChange, proteinChange,
@@ -120,7 +121,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	 * @param transcript
 	 *            transcript for this annotation
 	 * @param change
-	 *            the annotated {@link GenomeVariant}
+	 *            the annotated {@link VariantDescription}
 	 * @param varTypes
 	 *            type of the variants
 	 * @param annoLoc
@@ -134,7 +135,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	 * @param messages
 	 *            {@link Collection} of {@link AnnotationMessage} objects
 	 */
-	public Annotation(TranscriptModel transcript, GenomeVariant change, Collection<VariantEffect> varTypes,
+	public Annotation(TranscriptModel transcript, VariantDescription change, Collection<VariantEffect> varTypes,
 			AnnotationLocation annoLoc, NucleotideChange genomicNTChange, NucleotideChange cdsNTChange,
 			ProteinChange proteinChange, Collection<AnnotationMessage> messages) {
 		if (change != null)
@@ -152,8 +153,9 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 		this.messages = ImmutableSortedSet.copyOf(messages);
 	}
 
-	/** @return the annotated {@link GenomeVariant} */
-	public GenomeVariant getGenomeVariant() {
+	/** @return the annotated {@link VariantDescription} */
+	public VariantDescription getGenomeVariant() {
+		// TODO: rename to getVariantDescription()
 		return change;
 	}
 
@@ -257,7 +259,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	 *
 	 * The <code>ALT</code> allele has to be given to this function since we trim away at least the first base of
 	 * <code>REF</code>/<code>ALT</code>.
-	 * 
+	 *
 	 * @param alt
 	 *            alt allele
 	 * @param code
@@ -285,7 +287,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	/**
 	 * Forward to {@link #toVCFAnnoString(String, boolean, AminoAcidCode)
 	 * toVCFAnnoString(alt, true, code)}.
-	 * 
+	 *
 	 * @param alt
 	 *            alternateve allele
 	 * @param code
@@ -313,7 +315,7 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	 *
 	 * If this annotation does not have a symbol (e.g., for an intergenic annotation) then just return the annotation
 	 * string, e.g., <code>"KIAA1751:uc001aim.1:exon18:c.T2287C:p.X763Q"</code>.
-	 * 
+	 *
 	 * @param code
 	 *            Three ore one letter amino acid code
 	 *
@@ -359,6 +361,26 @@ public final class Annotation implements VariantDescription, Comparable<Annotati
 	@Override
 	public String getAlt() {
 		return change.getAlt();
+	}
+
+	@Override
+	public int getRefLength() {
+		return change.getRefLength();
+	}
+
+	@Override
+	public int getAltLength() {
+		return change.getAltLength();
+	}
+
+	@Override
+	public GenomeInterval getGenomeInterval() {
+		return change.getGenomeInterval();
+	}
+
+	@Override
+	public VariantDescription withStrand(Strand strand) {
+		throw new UnsupportedOperationException("Cannot get Annotation withStrand()");
 	}
 
 	@Override

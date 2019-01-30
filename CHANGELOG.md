@@ -2,6 +2,10 @@
 
 ## HEAD (unreleased)
 
+### jannovar-cli
+
+* Adding `--gene-ids` argument to downloader for creating smaller databases (mostly for test purposes).
+
 ### jannovar-core
 
 * Extended `VariantEffect` for the effects of structural variants.
